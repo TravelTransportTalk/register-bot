@@ -1,0 +1,8 @@
+dataclasses_json==0.5.7
+python_telegram_bot==20.4
+requests==2.25.1
+rsa==4.8
+numpy==1.26.0
+pillow==10.1.0
+pillow-heif
+prettytable
