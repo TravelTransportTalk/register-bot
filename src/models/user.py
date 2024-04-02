@@ -22,3 +22,11 @@ class AuthUserRequest:
 class UserControllerResp:
     message: str
     user: User
+
+@dataclass_json
+@dataclass
+class ChangeUserRequest:
+    tg_id: int
+    nick: str
+    fullName: str
+    description: str

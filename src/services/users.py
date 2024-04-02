@@ -29,3 +29,12 @@ class UserService:
         else:
             print(response.text)
             return None
+
+    async def change(self, request: ChangeUserRequest) :
+        url = f'{self.api_url}/change'
+        response = requests.post(url, json=dataclasses.asdict(request))
+        if response.ok and response.text != "":
+            return True
+        else:
+            print(response.text)
+            return None

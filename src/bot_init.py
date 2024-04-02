@@ -8,6 +8,7 @@ from telegram.ext import (
 )
 
 from src.behavior.default_handler import default_builder
+from src.behavior.update_handler import update_builder
 from src.data_init import TOKEN
 
 
@@ -19,6 +20,7 @@ def bot_start() -> None:
     application = Application.builder().token(TOKEN).build()
 
     # simple start function
+    application.add_handler(update_builder())
     application.add_handler(default_builder())
 
     # lower case for some f*ckin reason, Telegram!
@@ -26,7 +28,8 @@ def bot_start() -> None:
         application,
         [
             BotCommand("start", "login user"),
-            BotCommand("cancel", "go to main menu")
+            BotCommand("cancel", "go to main menu"),
+            BotCommand("change", "change name")
         ]
     )
 
