@@ -8,6 +8,7 @@ ingress:
   className: nginx
   tls:
     enabled: true
+    secretName: travel-talk-mkls-space
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
   hosts:

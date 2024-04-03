@@ -17,7 +17,11 @@ spec:
         {{- range .hosts }}
         - {{ . | quote }}
         {{- end }}
+      {{- if .tls.secretName }}
+      secretName: "{{ .tls.secretName }}"
+      {{- else }}
       secretName: "{{ $.Release.Name }}-tls"
+      {{- end }}
   {{- end }}
   rules:
     {{- range .hosts }}
