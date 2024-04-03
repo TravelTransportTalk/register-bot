@@ -70,7 +70,7 @@ async def registration_end_callback(update: Update, context: ContextTypes.DEFAUL
             f"User[nickname={nick}] successfully registered")
 
         await update.message.reply_text(
-            "Спасибо вы зарегистрировались! Теперь можно переходить на сайт и искать попутчиков!\n" +
+            "Спасибо вы зарегистрировались!\nТеперь можно переходить на сайт и искать попутчиков!\n\n" +
             f"Ваш tgId: {i}.\n" +
             "Создать новую заявку можно по ссылке:\n"
         )
