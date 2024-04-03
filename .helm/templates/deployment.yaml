@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: register-bot
+  template:
+    metadata:
+      labels:
+        app: register-bot
+    spec:
+      containers:
+      - name: bot-server
+        image: {{ .Values.image }}
+        ports:
+          - containerPort: 8080
+            name: http
+        env:
+          - name: API
+            value: "http://0.0.0.0:8080/tt/users"
+          - name: BOT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-tg-token"
+                key: password
