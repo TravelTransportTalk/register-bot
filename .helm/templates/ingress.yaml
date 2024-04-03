@@ -1,0 +1,36 @@
+---
+{{- with $.Values.ingress }}
+{{- if .enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ $.Release.Name }}-bot"
+  {{- if .annotations }}
+  annotations:
+    {{- toYaml .annotations | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .tls.enabled }}
+  ingressClassName: {{ .className }}
+  tls:
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: "{{ $.Release.Name }}-tls"
+  {{- end }}
+  rules:
+    {{- range .hosts }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - path: /tt
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $.Release.Name }}-svc"
+                port:
+                  name: http
+    {{- end }}
+{{- end }}
+{{- end }}
