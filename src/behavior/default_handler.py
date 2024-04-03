@@ -26,7 +26,7 @@ async def registration_nickname_callback(update: Update, context: ContextTypes.D
             "Создать новую заявку можно по ссылке:\n"
         )
         await update.message.reply_text(
-            f"https://{WEBUI_BASE_URL}/new_trip_registration?tg_id={i}"
+            f"{WEBUI_BASE_URL}/new_trip_registration?tg_id={i}"
         )
 
         return ConversationHandler.END
@@ -75,7 +75,7 @@ async def registration_end_callback(update: Update, context: ContextTypes.DEFAUL
             "Создать новую заявку можно по ссылке:\n"
         )
         await update.message.reply_text(
-            f"https://{WEBUI_BASE_URL}/new_trip_registration?tg_id={i}"
+            f"{WEBUI_BASE_URL}/new_trip_registration?tg_id={i}"
         )
     else:
         logger.info(
