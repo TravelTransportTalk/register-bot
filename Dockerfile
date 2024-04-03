@@ -11,3 +11,4 @@ RUN python -m venv /env && pip install -r requirements.txt
 
 ADD --chown=runner bot.py /app/
 ADD --chown=runner src /app/src
+USER runner
