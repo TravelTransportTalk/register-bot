@@ -28,8 +28,8 @@ spec:
     - host: {{ . | quote }}
       http:
         paths:
-          - path: /tt
-            pathType: Prefix
+          - path: /tt/users
+            pathType: Exact
             backend:
               service:
                 name: "{{ $.Release.Name }}-svc"
