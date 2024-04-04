@@ -1,0 +1,34 @@
+---
+{{- with $.Values.ingress }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ $.Release.Name }}-bot"
+  {{- if .annotations }}
+  annotations:
+    {{- toYaml .annotations | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .tls.enabled }}
+  ingressClassName: {{ .className }}
+  tls:
+    - hosts:
+        - "{{ .webhookPublicHost }}"
+      {{- if .tls.secretName }}
+      secretName: "{{ .tls.secretName }}"
+      {{- else }}
+      secretName: "{{ $.Release.Name }}-tls"
+      {{- end }}
+  {{- end }}
+  rules:
+    - host: "{{ .webhookPublicHost }}"
+      http:
+        paths:
+          - path: /telegram
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $.Release.Name }}-svc"
+                port:
+                  name: http
+{{- end }}

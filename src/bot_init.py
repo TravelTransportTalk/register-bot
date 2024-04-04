@@ -9,7 +9,10 @@ from telegram.ext import (
 
 from src.behavior.default_handler import default_builder
 from src.behavior.update_handler import update_builder
-from src.data_init import TOKEN
+from src.data_init import (
+    TOKEN, WEBHOOK_PUBLIC_URL, WEBHOOK_BIND_HOST,
+    WEBHOOK_BIND_PORT, WEBHOOK_SECRET
+)
 
 
 import asyncio
@@ -34,7 +37,14 @@ def bot_start() -> None:
     )
 
     # Run the bot until the user presses Ctrl-C
-    application.run_polling(allowed_updates=Update.ALL_TYPES)
+    # application.run_polling(allowed_updates=Update.ALL_TYPES)
+    application.run_webhook(
+        listen="0.0.0.0",
+        port=int(WEBHOOK_BIND_PORT),
+        url_path=WEBHOOK_PUBLIC_URL,
+        max_connections=100,
+        secret_token=WEBHOOK_SECRET
+    )
 
 
 def __init_commands(application, commands: List[BotCommand]):

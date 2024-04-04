@@ -2,3 +2,13 @@
 image: ghcr.io/traveltransporttalk/register-bot:latest
 apiUrl: http://travel-talk-server-svc:8080/tt/users
 webUIBaseURL: "https://travel-talk.mkls.space"
+ingress:
+  className: nginx
+  tls:
+    enabled: true
+    secretName: travel-talk-mkls-space
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+
+  webhookPublicHost: "travel-talk.mkls.space"
+  webhookPublicProto: "https"

@@ -23,6 +23,19 @@ spec:
             value: "{{ .Values.apiUrl }}"
           - name: WEBUI_BASE_URL
             value: "{{ .Values.webUIBaseURL }}"
+          {{- with .Values.ingress }}
+          - name: WEBHOOK_PUBLIC_URL
+            value: "{{ .webhookPublicProto}}://{{ .webhookPublicHost }}/telegram"
+          {{- end }}
+          - name: WEBHOOK_BIND_HOST
+            value: "0.0.0.0"
+          - name: WEBHOOK_BIND_PORT
+            value: "8080"
+          - name: WEBHOOK_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-tg-token"
+                key: webhook-secret-token
           - name: BOT_TOKEN
             valueFrom:
               secretKeyRef:
