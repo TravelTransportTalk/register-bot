@@ -26,7 +26,7 @@ class UserControllerResp:
 @dataclass_json
 @dataclass
 class ChangeUserRequest:
-    tg_id: int
+    tgId: int
     nick: str
     fullName: str
     description: str

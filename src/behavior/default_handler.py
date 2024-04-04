@@ -1,8 +1,9 @@
 from telegram._update import Update
+from telegram.constants import ParseMode
 from telegram.ext import ContextTypes, ConversationHandler, CommandHandler, MessageHandler, filters, \
     CallbackQueryHandler
 
-from src.data_init import logger
+from src.data_init import logger, WEBUI_BASE_URL
 from src.models.user import User
 from src.services.init import user_api
 
@@ -10,8 +11,8 @@ REGISTRATION_NAME, REGISTRATION_DESCRIPTION, REGISTRATION_END = range(3)
 
 
 async def registration_nickname_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-
-    registration = await user_api.auth(update.message.from_user.id)
+    i = update.message.from_user.id
+    registration = await user_api.auth(i)
 
     if registration is None:
         await update.message.reply_text(
@@ -20,7 +21,12 @@ async def registration_nickname_callback(update: Update, context: ContextTypes.D
         return REGISTRATION_NAME
     else:
         await update.message.reply_text(
-            "Привет, ты уже зарегистрирован, твой code: " + str(update.message.from_user.id)
+            "Вы уже зарегистрированы.\n" +
+            f"Ваш tgId: {i}.\n" +
+            "Создать новую заявку можно по ссылке:\n"
+        )
+        await update.message.reply_text(
+            f"{WEBUI_BASE_URL}/new_trip_registration?tg_id={i}"
         )
 
         return ConversationHandler.END
@@ -49,13 +55,14 @@ async def registration_description_callback(update: Update, context: ContextType
 async def registration_end_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data["description"] = update.message.text
     nick = context.user_data["nick"]
+    i = update.message.from_user.id
     res = await user_api.create_user(
         User(
             context.user_data["nick"],
             context.user_data["full_name"],
             context.user_data["description"],
             update.message.from_user.username,
-            update.message.from_user.id
+            i
         ))
 
     if res is not None:
@@ -63,7 +70,12 @@ async def registration_end_callback(update: Update, context: ContextTypes.DEFAUL
             f"User[nickname={nick}] successfully registered")
 
         await update.message.reply_text(
-            "Спасибо вы зарегистрировались! Теперь можно переходить на сайт и искать попутчиков!"
+            "Спасибо вы зарегистрировались!\nТеперь можно переходить на сайт и искать попутчиков!\n\n" +
+            f"Ваш tgId: {i}.\n" +
+            "Создать новую заявку можно по ссылке:\n"
+        )
+        await update.message.reply_text(
+            f"{WEBUI_BASE_URL}/new_trip_registration?tg_id={i}"
         )
     else:
         logger.info(

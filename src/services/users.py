@@ -1,5 +1,7 @@
 import json
 from typing import Generic, TypeVar, Dict
+
+from src.data_init import logger
 from src.models.user import *
 
 
@@ -18,7 +20,7 @@ class UserService:
         if response.ok and response.text != "":
             return True
         else:
-            print(response.text)
+            logger.info(response.text)
             return None
 
     async def auth(self, tg_id: int) -> User | None:
@@ -27,7 +29,7 @@ class UserService:
         if response.ok and response.text != "":
             return UserControllerResp.from_json(response.text).user
         else:
-            print(response.text)
+            logger.info(response.text)
             return None
 
     async def change(self, request: ChangeUserRequest) :
@@ -36,5 +38,5 @@ class UserService:
         if response.ok and response.text != "":
             return True
         else:
-            print(response.text)
+            logger.info(response.text)
             return None

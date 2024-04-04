@@ -1,0 +1,4 @@
+---
+image: ghcr.io/traveltransporttalk/register-bot:latest
+apiUrl: http://travel-talk-server-svc:8080/tt/users
+webUIBaseURL: "https://travel-talk.mkls.space"
