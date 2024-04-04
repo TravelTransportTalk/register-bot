@@ -25,9 +25,8 @@ async def registration_nickname_callback(update: Update, context: ContextTypes.D
             f"Ваш tgId: {i}.\n" +
             "Создать новую заявку можно по ссылке:\n"
         )
-        await update.message.reply_text(
-            f"{WEBUI_BASE_URL}/new_trip_registration?tg_id={i}"
-        )
+        url = f"{WEBUI_BASE_URL}/Создать%20поездку?tg_id={i}"
+        await update.message.reply_text(url)
 
         return ConversationHandler.END
 
@@ -74,9 +73,8 @@ async def registration_end_callback(update: Update, context: ContextTypes.DEFAUL
             f"Ваш tgId: {i}.\n" +
             "Создать новую заявку можно по ссылке:\n"
         )
-        await update.message.reply_text(
-            f"{WEBUI_BASE_URL}/new_trip_registration?tg_id={i}"
-        )
+        url = f"{WEBUI_BASE_URL}/Создать%20поездку?tg_id={i}"
+        await update.message.reply_text(url)
     else:
         logger.info(
             f"User[nickname={nick}] error when register")
