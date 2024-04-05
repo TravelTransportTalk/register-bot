@@ -8,10 +8,11 @@ WEBHOOK_PUBLIC_URL = os.environ.get("WEBHOOK_PUBLIC_URL")
 WEBHOOK_SECRET = os.environ.get("WEBHOOK_SECRET")
 WEBHOOK_BIND_HOST = os.environ.get("WEBHOOK_BIND_HOST", "0.0.0.0")
 WEBHOOK_BIND_PORT = os.environ.get("WEBHOOK_BIND_PORT", "8080")
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 
 
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=LOG_LEVEL
 )
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
