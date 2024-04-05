@@ -43,6 +43,7 @@ def bot_start() -> None:
         listen="0.0.0.0",
         port=int(WEBHOOK_BIND_PORT),
         max_connections=100,
+        url_path="telegram",
         secret_token=WEBHOOK_SECRET
     )
 
